@@ -1,0 +1,201 @@
+@startuml
+scale max 4000 width
+class lab3.Main {
++static void main(String[] args)
+}
+lab3.Main --down[#AAA]-o lab3.objects.Money
+lab3.Main -down[#AAA]--o lab3.tovars.Shares
+lab3.Main -down[#AAA]-o lab3.objects.Stall
+lab3.Main -down[#AAA]--o lab3.tovars.NewsPapers
+lab3.Main -down[#AAA]-o lab3.places.StockMarket
+lab3.Main --down[#AAA]-o lab3.places.Market
+lab3.Main -down[#AAA]--o lab3.Persons.Buyers
+lab3.Main -down[#AAA]-o lab3.Persons.Buyers
+lab3.Main -down[#AAA]--o lab3.Persons.MainHero
+lab3.Main -down[#AAA]-o lab3.Persons.Trader
+lab3.Main --down[#AAA]-o lab3.Persons.TraderFructs
+
+enum lab3.Town {
+DAVILON("Давилон"),BREKHENVIL("Брекхенвиль"), GRABENBERG("Грабенберг"),SAN_KOMARIK("Сан-Комарик")
+-final String name
+Town(String name)
++String getName()
+}
+
+
+enum lab3.tovars.FrVeg {
+APPLES("яблоки"),TOMATOES("помидоры"),POTATOES("картофель"),CABBAGES("капуста")
+-final String name
+FrVeg(String name)
++String getName()
+}
+
+
+class lab3.tovars.NewsPapers extends lab3.tovars.Tovar {
++NewsPapers(String name)
+}
+
+
+class lab3.tovars.Shares extends lab3.tovars.Tovar implements lab3.interfaces.Fallable {
+#String name
++Shares(String name)
++String toString()
++void fall()
++String getName()
++String nameCost()
+}
+
+
+abstract class lab3.tovars.Tovar {
+#String name
++String toString()
++int hashCode()
++boolean equals(Object obj)
++String getName()
+}
+
+
+class lab3.places.Market extends lab3.places.Places implements lab3.interfaces.Tradable {
+#Object tovar
++Market(String name,String tovar)
++void trade(Tovar tovar)
++void tradefr(FrVeg tovar)
++Object getTovar()
+}
+
+
+abstract class lab3.places.Places implements lab3.interfaces.Beable {
+#String name
+#PlacesType location
++Places(String name, PlacesType location)
++String toString()
++int hashCode()
++boolean equals(Object obj)
++void be(Places place)
++String getName()
+}
+
+
+enum lab3.places.PlacesType {
+MARKET,STOCKMARKET
+}
+
+
+class lab3.places.StockMarket extends lab3.places.Places implements lab3.interfaces.Tradable {
+#Object tovar
++StockMarket(String name, Object tovar)
++void trade(Tovar tovars)
++void otl(Places obj)
+}
+
+
+class lab3.Persons.Buyers extends lab3.Persons.Person implements lab3.interfaces.Earnable {
++Buyers(String name)
++String buy(Tovar tovar)
++String scream(String tovar)
++void earn(String count, Money obj)
++void want(Tovar obj)
++void remains(Person name,String charact,String k)
+}
+
+
+class lab3.Persons.MainHero extends lab3.Persons.Person implements lab3.interfaces.Nahodable, lab3.interfaces.Earnable {
+-int counter=0
+#String pronoun
++MainHero(String name,String pol)
++void earn(String howMany, Money obj)
++String sobiralsa(Tovar obj)
++String getName()
++String buy(String obj)
++String nahod(String need, boolean gp, String location)
+}
+
+
+abstract class lab3.Persons.Person implements lab3.interfaces.Beable {
+#String name
+#Places location
++Person(String name,Places location)
++Person(String name)
++String getName()
++String remember(String word,String what)
++String toString()
++void be(Places obj)
++int hashCode()
++boolean equals(Object obj)
++void remember(String what)
++String begin()
++void vnim(NewsPapers obj)
++void prikid()
++void underst(String obj)
++void csee(Object name,String move)
++void can(String charasteristic,String move)
++String need()
++void need(String charasteristic,String obj)
++String razl(Stall obj)
+}
+
+
+class lab3.Persons.Trader extends lab3.Persons.Person implements lab3.interfaces.Tradable,lab3.interfaces.Earnable,lab3.interfaces.Carryable {
++Trader(String name, Places location)
++void trade(Tovar tovars)
++void carry(Tovar obj)
++void earn(String howmany,Money obj)
++String scream(String obj)
+}
+
+
+class lab3.Persons.TraderFructs extends lab3.Persons.Person implements lab3.interfaces.Tradable {
++TraderFructs(String name, Places location)
++void trade(Tovar tovars)
++String trade()
++void tradefr(FrVeg tovars)
++String razl(Stall place)
+}
+
+
+class lab3.objects.Money {
+-String name
++String toString()
++Money(String name)
++String getName()
+}
+
+
+class lab3.objects.Stall {
+-final String name
++Stall(String name)
++String toString()
+}
+
+
+interface lab3.interfaces.Beable {
+void be(Places where)
+}
+
+
+interface lab3.interfaces.Carryable {
+void carry(Tovar obj)
+}
+
+
+interface lab3.interfaces.Earnable {
+void earn(String count, Money obj)
+}
+
+
+interface lab3.interfaces.Fallable {
+void fall()
+}
+
+
+interface lab3.interfaces.Nahodable {
+default String nahod(String ned,boolean gp, String location)
+}
+
+
+interface lab3.interfaces.Tradable {
+void trade(Tovar tovars)
+}
+
+
+@enduml
