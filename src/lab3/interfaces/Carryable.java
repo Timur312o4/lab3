@@ -1,6 +1,6 @@
 package lab3.interfaces;
-import lab3.tovars.Tovar;
+import lab3.Products.Products;
 
 public interface Carryable {
-    void carry(Tovar obj);
+    void carry(Products obj);
 }

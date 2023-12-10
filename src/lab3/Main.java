@@ -1,52 +1,57 @@
 package lab3;
 import lab3.Persons.Buyers;
 import lab3.Persons.MainHero;
-import lab3.Persons.Trader;
+import lab3.Persons.TraderShares;
 import lab3.Persons.TraderFructs;
+import lab3.Products.Fruits;
+import lab3.Products.Products;
+import lab3.Products.Vegetables;
 import lab3.objects.*;
 import lab3.places.*;
-import lab3.tovars.FrVeg;
-import lab3.tovars.NewsPapers;
-import lab3.tovars.Shares;
-
+import lab3.Products.NewsPapers;
+import lab3.Products.Shares;
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
-        Town davilon = Town.DAVILON;
-        Town brekhenvil = Town.BREKHENVIL;
-        Town grabenberg = Town.GRABENBERG;
-        Town sanKomarik = Town.SAN_KOMARIK;
         Money money = new Money("деньги");
+        Scanner n1 = new Scanner(System.in);
+        System.out.println("Введите цену акций");
+        int income = n1.nextInt();
         Shares shares = new Shares("акции");
         Stall stall = new Stall("прилавок");
+        Fruits apples = new Fruits("яблоки");
+        Vegetables tomatoes = new Vegetables("помидоры");
+        Vegetables vegetables = new Vegetables("овощи");
+        Vegetables cabbage = new Vegetables("капуста");
+        Vegetables potato = new Vegetables("картофель");
+        Products[] vegetablesFruits = {tomatoes,apples, cabbage,potato};
+        OnTheStreet street = new OnTheStreet("улица",PlacesType.ONTHESTREET);
 
         NewsPapers newspaper = new NewsPapers("газета");
-        StockMarket rynokAkz = new StockMarket("рынок акций",shares);
-        Market productMarket = new Market("торговый рынок","яблоки,помидоры,картофель,капуста");
-        Buyers buyers= new Buyers("покупатели");
-        Buyers buyer = new Buyers("покупатель");
-        MainHero mainHero = new MainHero("Главный герой","м");
-        Trader trader= new Trader("продавец акций",rynokAkz);
-        TraderFructs traderFructs = new TraderFructs("продавец фруктов или овощей",productMarket);
+        StockMarket sharesMarket = new StockMarket("рынок акций");
+        ProductMarket productMarket = new ProductMarket("торговый рынок",vegetables);
+        Buyers buyers= new Buyers("покупатели","они",productMarket);
+        Buyers buyer = new Buyers("покупатель","он",sharesMarket);
+        MainHero mainHero = new MainHero("Главный герой","м", street);
+        TraderShares traderShares = new TraderShares("продавец акций","м",sharesMarket);
+        TraderFructs traderFructs = new TraderFructs("продавец фруктов или овощей","м",productMarket);
 
-        mainHero.vnim(newspaper);
-        mainHero.remember(mainHero.getName()+" "+mainHero.sobiralsa(shares));
-        shares.fall();
-        mainHero.prikid();
-        mainHero.earn("сколько",money);
-        mainHero.underst(mainHero.nahod(mainHero.need(),false,brekhenvil.getName()));
-        System.out.println(mainHero.nahod(mainHero.need(),true,davilon.getName()+", " +grabenberg.getName() +", "+ sanKomarik.getName()));//нужно быть в ...
-        rynokAkz.be(rynokAkz);
-        rynokAkz.trade(shares);
-        rynokAkz.otl(productMarket);
-        productMarket.tradefr(FrVeg.APPLES);
-        productMarket.tradefr(FrVeg.CABBAGES);
-        productMarket.tradefr(FrVeg.POTATOES);
-        productMarket.tradefr(FrVeg.TOMATOES);
-        traderFructs.need("только",traderFructs.razl(stall));
-        buyers.csee(traderFructs,traderFructs.trade());
-        trader.carry(shares);
-        trader.can("единственно",trader.scream(shares.nameCost()));
-        buyer.remains(buyer,"только",buyer.scream(shares.getName()));
-        buyer.want(shares);
+        mainHero.attention(newspaper,"что"," "+mainHero.wasGoingTo(shares,income));
+        mainHero.estimate();
+        mainHero.earn(income,money);
+        mainHero.underst(mainHero.locate(mainHero.need(),income, false, Town.BREKHENVIL.getName(), sharesMarket, shares));
+        mainHero.underst(mainHero.locate(mainHero.need(),income, true, Town.DAVILON.getName() + ", " + Town.GRABENBERG.getName() + ", " + Town.SAN_KOMARIK.getName(), sharesMarket, shares));//нужно быть в ...
+        sharesMarket.trade(shares);
+        sharesMarket.check(productMarket,sharesMarket);
+        for (Products item : vegetablesFruits) {
+            productMarket.trade(item);
+        }
+        traderFructs.spreadOut(vegetables,stall);
+        buyers.can("видеть чем",true,traderFructs.sell());
+        traderShares.carry(shares);
+        traderShares.can("единственно", true,traderShares.scream(shares));
+        buyers.can("видеть",false,traderShares.sell());
+        buyer.remains(buyers,"только",buyer.scream(shares));
+        buyer.wantBuy();
     }
 }

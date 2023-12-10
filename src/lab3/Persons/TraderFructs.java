@@ -1,27 +1,23 @@
 package lab3.Persons;
 
+import lab3.Products.Vegetables;
 import lab3.objects.Stall;
 import lab3.places.Places;
 import lab3.interfaces.Tradable;
-import lab3.tovars.FrVeg;
-import lab3.tovars.Tovar;
+import lab3.Products.Products;
 
 public class TraderFructs extends Person implements Tradable{
-    public TraderFructs(String name, Places location){
-        super(name,location);
+    public TraderFructs(String name,String alternative, Places location){
+        super(name,alternative,location);
     }
     @Override
-    public void trade(Tovar tovars){
-        System.out.println(" продают " + tovars);
+    public void trade(Products products){
+        System.out.println(" продают " + products);
     }
-    public String trade(){
-        return "торгует";
+    public String sell(){
+        return " торгует " + this.name;
     }
-    public void tradefr(FrVeg tovars){
-        System.out.println(name + " продают " + tovars.getName());
-    }
-    @Override
-    public String razl(Stall place){
-        return "разложить свой товар на " + place;
+    public void spreadOut(Vegetables product, Stall place){
+        System.out.println("достаточно разложить свои " + product +" на " + place);
     }
 }

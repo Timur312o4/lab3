@@ -2,48 +2,51 @@ package lab3.Persons;
 import lab3.interfaces.Earnable;
 import lab3.interfaces.*;
 import lab3.objects.Money;
-import lab3.tovars.Tovar;
+import lab3.places.Places;
+import lab3.Products.Shares;
 
-public class MainHero extends Person implements Nahodable, Earnable {
-    private int counter=0;
-    protected String pronoun;
-    public MainHero(String name,String pol){
-        super(name);
-        if (pol.equals("ж")){
-            pronoun = "она";
-        }else{
-            if (pol.equals("м")){
-                pronoun= "он";
-            }else{
-                pronoun = "оно";
-            }
+public class MainHero extends Person implements Locateable, Earnable {
+    private int counter = 0;
+
+    public MainHero(String name, String alternativeName, Places places) {
+        super(name, alternativeName, places);
+    }
+
+    @Override
+    public void earn(int count, Money obj) {
+        if (count<10000){
+            System.out.println("как много" + " мог бы заработать " + obj);
+        } else{
+            System.out.println("почему " + "не смог бы заработать " + obj);
         }
     }
-    @Override
-    public void earn(String howMany, Money obj) {
-        System.out.println( howMany+ " мог заработать "+ obj);
+
+    public String wasGoingTo(Shares obj,int income) {
+        counter++;
+        if (income >= 10000) {
+            return getNameOrPronoun() + "не собирался " + "покупать, так как" + obj.fall(income);
+        }else {
+            return getNameOrPronoun() + " собирался скупить "+obj+" " + obj.fall(income);
+        }
     }
-    public String sobiralsa(Tovar obj){
-        return "собирался " + buy(obj.getName());
-    }
-    public String getName() {
+    public String getNameOrPronoun() {
         if (counter % 2 == 0) {
             counter++;
             return name;
         } else {
             counter++;
-            return "он";
+            return alternativeName;
         }
     }
-    public String buy(String obj){
-        return "скупить "+ obj;
+    public void estimate() {
+        System.out.println(this.name + " " + "начал прикидывать в уме ");
     }
-    @Override
-    public String nahod(String need, boolean gp, String location) {
-        if (gp){
-            return need + " находиться в " + location;
-        }else{
-            return " не" + need + " находиться в " + location;
+    public void underst(String obj) {
+        if (!obj.substring(0, 2).equals("не")) {
+            System.out.println(name + " понял, что" + obj);
+        } else {
+            System.out.println("осознал " + obj);
         }
     }
+
 }

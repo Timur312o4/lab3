@@ -1,5 +1,5 @@
 package lab3.places;
 
 public enum PlacesType {
-    MARKET,STOCKMARKET;
+    MARKET,STOCKMARKET,ONTHESTREET;
 }

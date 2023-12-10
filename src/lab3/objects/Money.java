@@ -1,7 +1,7 @@
 package lab3.objects;
 
 public class Money {
-    private String name;
+    private final String name;
     @Override
     public String toString(){
         return name;

@@ -1,8 +1,7 @@
 package lab3.interfaces;
 
-import lab3.tovars.Shares;
-import lab3.tovars.Tovar;
+import lab3.Products.Products;
 
 public interface Tradable {
-    void trade(Tovar tovars);
+    void trade(Products tovars);
 }
